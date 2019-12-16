@@ -74,7 +74,7 @@ lazy val docs = project
     "org.apache.spark" %% "spark-mllib"  % sparkVersion
   ))
   .settings(
-    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.10.3"),
+    addCompilerPlugin("org.typelevel" % "kind-projector" % "0.11.0" cross CrossVersion.full),
     scalacOptions ++= Seq(
       "-Ypartial-unification",
       "-Ydelambdafy:inline"
