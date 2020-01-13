@@ -2,7 +2,7 @@ val sparkVersion = "2.4.4"
 val catsCoreVersion = "2.0.0"
 val catsEffectVersion = "2.0.0"
 val catsMtlVersion = "0.7.0"
-val scalatest = "3.0.8"
+val scalatest = "3.1.0"
 val shapeless = "2.3.3"
 val scalacheck = "1.14.3"
 val irrecVersion = "0.2.1"
@@ -23,7 +23,7 @@ lazy val cats = project
   .settings(framelessSettings: _*)
   .settings(publishSettings: _*)
   .settings(
-    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.10.3"),
+    addCompilerPlugin("org.typelevel" % "kind-projector" % "0.11.0" cross CrossVersion.full),
     scalacOptions += "-Ypartial-unification"
   )
   .settings(libraryDependencies ++= Seq(
@@ -65,9 +65,9 @@ lazy val ml = project
 lazy val docs = project
   .settings(framelessSettings: _*)
   .settings(noPublishSettings: _*)
-  .enablePlugins(MdocPlugin)
-  .settings(mdocIn := file(".") / "docs" / "src" / "main" / "tut")
-  .settings(mdocOut := file(".") / "docs" / "target")
+  .settings(scalacOptions --= Seq("-Xfatal-warnings"))
+  .enablePlugins(TutPlugin)
+  .settings(crossTarget := file(".") / "docs" / "target")
   .settings(libraryDependencies ++= Seq(
     "org.apache.spark" %% "spark-core" % sparkVersion,
     "org.apache.spark" %% "spark-sql"  % sparkVersion,
@@ -84,7 +84,7 @@ lazy val docs = project
 
 lazy val framelessSettings = Seq(
   organization := "org.typelevel",
-  crossScalaVersions := Seq("2.11.12", "2.12.8"),
+  crossScalaVersions := Seq("2.11.12", "2.12.10"),
   scalaVersion := crossScalaVersions.value.last,
   scalacOptions ++= commonScalacOptions(scalaVersion.value),
   licenses += ("Apache-2.0", url("http://opensource.org/licenses/Apache-2.0")),

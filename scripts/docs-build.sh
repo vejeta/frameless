@@ -2,7 +2,7 @@
 
 set -eux
 
-sbt "copyReadme; docs/mdoc"
+sbt copyReadme tut
 
 gitbook="node_modules/gitbook-cli/bin/gitbook.js"
 
@@ -11,7 +11,7 @@ if ! test -e $gitbook; then
   npm install gitbook-cli
 fi
 
-$gitbook build docs/target docs/book
+$gitbook build docs/target/tut docs/book
 
 mv docs/book/* .
 
